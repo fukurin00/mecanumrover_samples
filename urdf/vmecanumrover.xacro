@@ -217,11 +217,6 @@
   </xacro:macro>
 
 
-
-
-
-
-
   <joint name="body_joint" type="fixed">
     <parent link="base_link"/>
     <child  link="body_link"/>
@@ -435,10 +430,6 @@
 
   </xacro:macro>
 
-
-
-
-
   <!-- base attachment(LiDER,emergency button,wyreless charge) board(front) -->
   <!--  upper side  --> 
 <!--  <xacro:optionattachboard prefix="front" xyz="0.157 0 0.1665" z_dir="0" /> -->
@@ -540,10 +531,6 @@
   <gazebo reference="button_link">
     <material>Gazebo/Red</material>
   </gazebo>
-
-
-
-
 
 
   <gazebo>
