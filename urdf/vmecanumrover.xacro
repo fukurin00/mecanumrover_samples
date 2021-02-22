@@ -2,12 +2,11 @@
 <robot name="vmecanumrover" xmlns:xacro="http://ros.org/wiki/xacro">
   <link name="base_link"/>
 
-
   <xacro:macro name="cylinder_inertial" params="mass radius length">
-	<mass value="${mass}"/>
-	<inertia ixx="${((radius*radius)/4 + (length*length)/12)*mass}" ixy="0" ixz="0"
-			 iyy="${((radius*radius)/4 + (length*length)/12)*mass}" iyz="0"
-			 izz="${(mass*radius*radius)/2}" />
+    <mass value="${mass}"/>
+    <inertia ixx="${((radius*radius)/4 + (length*length)/12)*mass}" ixy="0" ixz="0"
+        iyy="${((radius*radius)/4 + (length*length)/12)*mass}" iyz="0"
+        izz="${(mass*radius*radius)/2}" />
   </xacro:macro>
 
   <xacro:macro name="box_inertial" params="mass height width depth">
@@ -438,19 +437,6 @@
 
 
 
-  <!-- Bumper  -->
-  <!-- right -->
-  <xacro:sidebumperattachboard prefix="right" xyz="0.0 0.157 0.0285" z_dir="180"/>
-  <!-- left -->
-  <xacro:sidebumperattachboard prefix="left" xyz="0.0 -0.157 0.0285" z_dir="0"/>
-
-  <!-- front -->
-  <xacro:bumperbaseboard prefix="front" parent="body_link" xyz="0.196 0 0.0365" z_dir="90"/>
-  <!-- back -->
-  <xacro:bumperbaseboard prefix="back" parent="body_link" xyz="-0.196 0 0.0365" z_dir="-90"/>
-
-
-
 
 
   <!-- base attachment(LiDER,emergency button,wyreless charge) board(front) -->
@@ -555,143 +541,6 @@
     <material>Gazebo/Red</material>
   </gazebo>
 
-
-  <!-- Wyreless charger  -->
-  <!-- attachiment  -->
-<!--
-  <joint name="charger_attach_joint" type="fixed">
-    <parent link="board_front_link"/>
-    <child  link="charger_attach_link"/>
-    <origin xyz="0.06 0 -0.0015" rpy="0 0 0"/>
-  </joint>
-  <link name="charger_attach_link">
-    <visual>
-      <geometry>
-          <mesh filename="package://mecanumrover_samples/meshes/dae/mecanum_charger_attach.dae" />
-      </geometry>
-      <material name="gray"/>
-    </visual>
-    <collision>
-      <geometry>
-          <mesh filename="package://mecanumrover_samples/meshes/stl/mecanum_charger_attach.stl" />
-      </geometry>
-    </collision>
-    <inertial>
-        <xacro:box_inertial mass="0.222" height="0.08" width="0.078" depth="0.026" />
-    </inertial>  
-
-  </link>
-  <gazebo reference="charger_attach_link">
-    <material>Gazebo/White</material>
-  </gazebo>
--->
-
-  <!-- wyreless charger  -->
-<!--
-  <joint name="charger_joint" type="prismatic">
-    <parent link="charger_attach_link"/>
-    <child  link="charger_link"/>
-    <origin xyz="0.0645 0 -0.03" rpy="0 0 0"/>
-
-    <limit lower="-0.007" upper="0.0" effort="1" velocity="1.0" />
-    <axis xyz="1 0 0"/>
-    <origin xyz="0 0 0" rpy="0 0 0"/>
-    <dynamics damping="0.01"/>
-
-  </joint>
-  <transmission name="charger_trans">
-    <type>transmission_interface/SimpleTransmission</type>
-    <joint name="charger_joint">
-        <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-    </joint>
-    <actuator name="charger_motor">
-      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-      <mechanismReduction>1</mechanismReduction>
-    </actuator>
-  </transmission>
-
-  <link name="charger_link">
-    <visual>
-      <geometry>
-          <mesh filename="package://mecanumrover_samples/meshes/dae/mecanum_charger.dae" />
-      </geometry>
-      <material name="black"/>
-    </visual>
-    <collision>
-      <geometry>
-          <mesh filename="package://mecanumrover_samples/meshes/stl/mecanum_charger.stl" />
-      </geometry>
-    </collision>
-    <inertial>
-        <xacro:box_inertial mass="1.678" height="0.11" width="0.16" depth="0.0781" />
-    </inertial>  
-
-  </link>
-  <gazebo reference="charger_link">
-    <material>Gazebo/Black</material>
-    <mu1 value="2.5" />
-    <mu2 value="2.5" />
-    <kp value="50000" />
-    <kd value="100" />
-  </gazebo>
--->
-
-
-
-  <!-- NUC PC  -->
-  <!-- option attach board  -->
-  <joint name="board_center_joint" type="fixed">
-    <parent link="body_link"/>
-    <child  link="board_center_link"/>
-    <origin xyz="0.0 0 0.1665" rpy="0 0 0"/>
-  </joint>
-  <link name="board_center_link">
-    <visual>
-      <geometry>
-          <mesh filename="package://mecanumrover_samples/meshes/dae/mecanum_nuc_board.dae" />
-      </geometry>
-      <material name="gray"/>
-    </visual>
-    <collision>
-      <geometry>
-          <mesh filename="package://mecanumrover_samples/meshes/stl/mecanum_nuc_board.stl" />
-      </geometry>
-    </collision>
-    <inertial>
-        <xacro:box_inertial mass="0.16" height="0.003" width="0.27" depth="0.095" />
-    </inertial>  
-
-  </link>
-  <gazebo reference="board_center_link">
-    <material>Gazebo/White</material>
-  </gazebo>
-
-  <!-- NUC  -->
-  <joint name="nuc_joint" type="fixed">
-    <parent link="board_center_link"/>
-    <child  link="nuc_link"/>
-    <origin xyz="0.0 0 0.019" rpy="0 0 0"/>
-  </joint>
-  <link name="nuc_link">
-    <visual>
-      <geometry>
-          <mesh filename="package://mecanumrover_samples/meshes/dae/mecanum_nuc.dae" />
-      </geometry>
-      <material name="black"/>
-    </visual>
-    <collision>
-      <geometry>
-          <mesh filename="package://mecanumrover_samples/meshes/stl/mecanum_nuc.stl" />
-      </geometry>
-    </collision>
-    <inertial>
-        <xacro:box_inertial mass="1.18" height="0.0352" width="0.117" depth="0.112" />
-    </inertial>  
-
-  </link>
-  <gazebo reference="nuc_link">
-    <material>Gazebo/Black</material>
-  </gazebo>
 
 
 
