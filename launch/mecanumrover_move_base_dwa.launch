@@ -10,23 +10,34 @@
 
   <!-- メカナムローバーの回転中心からLRFまでの座標変換 -->
   <!-- メカナムローバーVer2.0 or Ver2.1の場合 -->
-  <node pkg="tf" type="static_transform_publisher" name="stp_laser" args="0.2 0 0.08 3.14159 3.14159 0 base_link laser 1" />
+  <!-- <node pkg="tf" type="static_transform_publisher" name="stp_laser" args="0.2 0 0.08 3.14159 3.14159 0 base_link laser 1" /> -->
   <!-- メカナムローバーG120の場合 -->
-  <!-- <node pkg="tf" type="static_transform_publisher" name="stp_laser" args="0.285 0 0.24 0 0 0 base_link laser 1" /> -->
+  <node pkg="tf" type="static_transform_publisher" name="stp_laser" args="0.2 0 0.08 0 0 0 base_link laser_1 1" />
+  <node pkg="tf" type="static_transform_publisher" name="stp_laser1" args="-0.2 0 0.08 0 0 1.54 base_link laser_2 1" />
+
 
   <!-- LRFのデバイスドライバノード -->
-  <node name="horizontal_laser" pkg="urg_node"
+  <node name="horizontal_laser1" pkg="urg_node"
     type="urg_node" >
     <param name="serial_port" value="/dev/ttyACM0" />　<!-- デバイスドライバファイルのパス -->
-    <param name="frame_id" value="laser" />
+    <param name="frame_id" value="laser_1" />
     <param name="angle_min" value="-1.57" />　<!-- LRFの有効検出角度（下限） -->
     <param name="angle_max" value="1.57" />  <!-- LRFの有効検出角度（上限） -->
   </node>
 
+
+   <!-- <node name="horizontal_laser2" pkg="urg_node"
+    type="urg_node" >
+    <param name="serial_port" value="/dev/ttyACM1" />　
+    <param name="frame_id" value="laser_2" />
+    <param name="angle_min" value="-1.57" />　
+    <param name="angle_max" value="1.57" />  
+  </node> -->
+
   
  
   <!-- mapサーバー -->
-  <arg name="map_file" default="$(find mecanumrover_samples)/map/gmap22.yaml"/>　<!--マップファイルのパスの指定 -->
+  <arg name="map_file" default="$(find mecanumrover_samples)/map/kawaguchi_labo_edited.yaml"/>　<!--マップファイルのパスの指定 -->
   <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" />
  
   <!-- 
